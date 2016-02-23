@@ -1,0 +1,8 @@
+PKG cmdliner
+PKG inotify
+PKG sexplib
+
+S lib
+S src
+
+B _build/**

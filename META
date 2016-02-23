@@ -1,0 +1,8 @@
+version = "0.1.0"
+description = "inotify event tools"
+requires = "inotify"
+archive(byte) = "inotify_event.cma"
+archive(byte, plugin) = "inotify_event.cma"
+archive(native) = "inotify_event.cmxa"
+archive(native, plugin) = "inotify_event.cmxs"
+exists_if = "inotify_event.cma"
