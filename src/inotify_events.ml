@@ -26,16 +26,24 @@ let string_of_event = function
 
 let stream format events =
   let dir = Sys.getcwd () in
+  (* We can't sit in the directory being monitored if we want
+     termination events. *)
+  Sys.chdir "/";
   let inotify = Inotify.create () in
   let _watch = Inotify.add_watch inotify dir events in
-  while true do
+  let continue = ref true in
+  while !continue do
     (* Block until there is something to read. Otherwise, our ioctl
        returns 0 and then makes a 0 read which errors with EINVAL. *)
     ignore (Unix.select [inotify] [] [] ~-.1.);
 
     let events = Inotify.read inotify in
     List.iter
-      (fun event -> print_endline (string_of_event format event))
+      (fun ((_, kinds, _, _) as event) ->
+         print_endline (string_of_event format event);
+         if List.mem Inotify.Ignored kinds
+         then continue := false
+      )
       events
   done;
   `Ok ()
