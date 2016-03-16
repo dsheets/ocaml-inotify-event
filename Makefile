@@ -9,7 +9,11 @@ WITH_CMDLINER=$(shell ocamlfind query cmdliner > /dev/null 2>&1 ; echo $$?)
 
 TARGETS=.cma .cmxa
 
-PRODUCTS=$(addprefix $(MOD_NAME),$(TARGETS)) inotify_events.native
+PRODUCTS=$(addprefix $(MOD_NAME),$(TARGETS))
+
+ifeq ($(WITH_CMDLINER), 0)
+PRODUCTS+=inotify_events.native
+endif
 
 TYPES=.mli .cmi .cmti
 
