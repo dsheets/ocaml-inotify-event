@@ -1,4 +1,4 @@
-FROM ocaml/opam:alpine-3.3_ocaml-4.02.3
+FROM ocaml/opam:alpine_ocaml-4.02.3
 
 MAINTAINER David Sheets <sheets@alum.mit.edu>
 
